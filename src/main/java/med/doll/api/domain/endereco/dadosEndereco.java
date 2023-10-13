@@ -1,4 +1,4 @@
-package med.doll.api.endereco;
+package med.doll.api.domain.endereco;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

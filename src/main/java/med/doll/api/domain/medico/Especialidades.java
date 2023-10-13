@@ -1,4 +1,4 @@
-package med.doll.api.medico;
+package med.doll.api.domain.medico;
 
 public enum Especialidades {
 

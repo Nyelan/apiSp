@@ -1,8 +1,8 @@
 package med.doll.api.controller;
 
 import jakarta.validation.Valid;
-import med.doll.api.endereco.Endereco;
-import med.doll.api.medico.*;
+import med.doll.api.domain.medico.*;
+import med.doll.api.domain.medico.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,8 +11,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/medicos")
@@ -39,6 +37,13 @@ public class medicoController {
         return ResponseEntity.ok(page);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity detalhar (@PathVariable Long id){
+        var medico = repository.getReferenceById(id);
+
+        return ResponseEntity.ok(new dadosDetalhamentoMedico(medico));
+    }
+
     @PutMapping
     @Transactional
     public ResponseEntity atualizar(@RequestBody @Valid dadosAtualizacaoMedico dados){
@@ -57,10 +62,4 @@ public class medicoController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity detalhar (@PathVariable Long id){
-        var medico = repository.getReferenceById(id);
-
-        return ResponseEntity.ok(new dadosDetalhamentoMedico(medico));
-    }
 }
