@@ -22,6 +22,7 @@ public class medicoController {
     @PostMapping
     @Transactional
     public ResponseEntity cadastrar(@RequestBody @Valid dadosCadastroMedico dados, UriComponentsBuilder uriBuilder){
+
         var medico = new Medico(dados);
         repository.save(medico);
 

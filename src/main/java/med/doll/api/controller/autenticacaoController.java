@@ -1,7 +1,10 @@
 package med.doll.api.controller;
 
 import jakarta.validation.Valid;
+import med.doll.api.domain.usuario.Usuario;
 import med.doll.api.domain.usuario.dadosAutenticacao;
+import med.doll.api.infra.security.dadosTokenJWT;
+import med.doll.api.infra.security.tokenService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,12 +21,17 @@ public class autenticacaoController {
     @Autowired
     private AuthenticationManager manager;
 
+    @Autowired
+    private tokenService tokenService;
+
     @PostMapping
     public ResponseEntity efetuarLogin(@RequestBody @Valid dadosAutenticacao dados){
-        var token = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
-        var authentication = manager.authenticate(token);
+        var authenticationToken = new UsernamePasswordAuthenticationToken(dados.login(), dados.senha());
+        var authentication = manager.authenticate(authenticationToken);
 
-        return ResponseEntity.ok().build();
+        var tokenJWT = tokenService.gerarToken((Usuario) authentication.getPrincipal());
+
+        return ResponseEntity.ok(new dadosTokenJWT(tokenJWT));
     }
 
 }
