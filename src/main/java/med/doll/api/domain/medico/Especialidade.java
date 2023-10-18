@@ -1,6 +1,6 @@
 package med.doll.api.domain.medico;
 
-public enum Especialidades {
+public enum Especialidade {
 
     ORTOPEDIA,
     CARDIOLOGIA,
