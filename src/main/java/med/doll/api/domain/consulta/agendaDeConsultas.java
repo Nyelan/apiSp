@@ -30,7 +30,7 @@ public class agendaDeConsultas {
 
         var paciente = pacienteRepository.getReferenceById(dados.idPaciente());
         var medico = escolherMedico(dados);
-        var consulta = new Consulta(null, medico, paciente, dados.data());
+        var consulta = new Consulta(null, medico, paciente, dados.data(), null);
         consultaRepository.save(consulta);
 
     }
@@ -51,8 +51,8 @@ public class agendaDeConsultas {
         if(!consultaRepository.existsById(dados.idConsulta())){
             throw new validacaoException("Consulta não encontrada");
         }
-
-
+        var consulta = consultaRepository.getReferenceById(dados.idConsulta());
+        consulta.cancelar(dados.motivo());
 
     }
 }
