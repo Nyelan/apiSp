@@ -2,7 +2,6 @@ package med.doll.api.controller;
 
 import jakarta.validation.Valid;
 import med.doll.api.domain.medico.*;
-import med.doll.api.domain.medico.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -32,8 +31,8 @@ public class medicoController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<DadosListagemMedicos>> listar(@PageableDefault(sort = {"nome"}) Pageable paginacao){
-        var page =  repository.findAllByAtivoTrue(paginacao).map(DadosListagemMedicos::new);
+    public ResponseEntity<Page<dadosListagemMedicos>> listar(@PageableDefault(sort = {"nome"}) Pageable paginacao){
+        var page =  repository.findAllByAtivoTrue(paginacao).map(dadosListagemMedicos::new);
 
         return ResponseEntity.ok(page);
     }
