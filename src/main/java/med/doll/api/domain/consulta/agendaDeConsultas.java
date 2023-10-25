@@ -2,6 +2,7 @@ package med.doll.api.domain.consulta;
 
 import med.doll.api.domain.medico.Medico;
 import med.doll.api.domain.medico.medicoRepository;
+import med.doll.api.domain.paciente.Paciente;
 import med.doll.api.domain.paciente.pacienteRepository;
 import med.doll.api.domain.validacaoException;
 import org.springframework.beans.factory.annotation.Autowired;
