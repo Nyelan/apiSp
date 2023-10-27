@@ -11,7 +11,7 @@ public interface medicoRepository extends JpaRepository<Medico, Long> {
     Page<Medico> findAllByAtivoTrue(Pageable paginacao);
 
     @Query("""
-        select m from Medicos m
+        select m from Medico m
         where
         m.ativo = true
         and
@@ -31,9 +31,9 @@ public interface medicoRepository extends JpaRepository<Medico, Long> {
 
     @Query("""
             select m.ativo
-            from Medicos m
+            from Medico m
             where
             m.id = :id
             """)
-    Boolean findAtivoById(Long idMedico);
+    Boolean findAtivoById(Long id);
 }

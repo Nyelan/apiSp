@@ -1,12 +1,14 @@
 package med.doll.api.domain.consulta;
 
+import med.doll.api.domain.consulta.validacoes.validadorAgendamentoDeConsulta;
 import med.doll.api.domain.medico.Medico;
 import med.doll.api.domain.medico.medicoRepository;
-import med.doll.api.domain.paciente.Paciente;
 import med.doll.api.domain.paciente.pacienteRepository;
 import med.doll.api.domain.validacaoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class agendaDeConsultas {
@@ -20,7 +22,10 @@ public class agendaDeConsultas {
     @Autowired
     pacienteRepository pacienteRepository;
 
-    public void agendar(dadosAgendamentosConsulta dados){
+    @Autowired
+    private List<validadorAgendamentoDeConsulta> validadores;
+
+    public dadosDetalhamentoConsulta agendar(dadosAgendamentoConsulta dados){
         if(!pacienteRepository.existsById(dados.idPaciente())){
             throw new validacaoException("ID do paciente informado não existe.");
         }
@@ -29,14 +34,21 @@ public class agendaDeConsultas {
             throw new validacaoException("ID do médico informado não existe.");
         }
 
+        validadores.forEach(v -> v.validar(dados));
+
         var paciente = pacienteRepository.getReferenceById(dados.idPaciente());
         var medico = escolherMedico(dados);
+        if(medico == null){
+            throw new validacaoException("Não existe médico disponível nesta data.");
+        }
         var consulta = new Consulta(null, medico, paciente, dados.data(), null);
         consultaRepository.save(consulta);
 
+        return new dadosDetalhamentoConsulta(consulta);
+
     }
 
-    private Medico escolherMedico(dadosAgendamentosConsulta dados) {
+    private Medico escolherMedico(dadosAgendamentoConsulta dados) {
         if(dados.idMedico() != null){
             return medicoRepository.getReferenceById(dados.idMedico());
         }

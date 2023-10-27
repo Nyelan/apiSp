@@ -1,14 +1,16 @@
 package med.doll.api.domain.consulta.validacoes;
 
-import med.doll.api.domain.consulta.dadosAgendamentosConsulta;
+import med.doll.api.domain.consulta.dadosAgendamentoConsulta;
 import med.doll.api.domain.validacaoException;
+import org.springframework.stereotype.Component;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
 
-public class validadorHorarioAntecedencia {
+@Component
+public class validadorHorarioAntecedencia implements validadorAgendamentoDeConsulta {
 
-    public void validar(dadosAgendamentosConsulta dados){
+    public void validar(dadosAgendamentoConsulta dados){
         var dataConsulta = dados.data();
 
         var agora = LocalDateTime.now();

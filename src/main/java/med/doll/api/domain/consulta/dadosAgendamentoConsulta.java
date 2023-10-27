@@ -6,7 +6,7 @@ import med.doll.api.domain.medico.Especialidade;
 
 import java.time.LocalDateTime;
 
-public record dadosAgendamentosConsulta(
+public record dadosAgendamentoConsulta(
         Long idMedico,
         @NotNull Long idPaciente,
         @NotNull

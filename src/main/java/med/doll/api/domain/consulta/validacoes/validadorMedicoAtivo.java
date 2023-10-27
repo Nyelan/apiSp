@@ -1,14 +1,18 @@
 package med.doll.api.domain.consulta.validacoes;
 
-import med.doll.api.domain.consulta.dadosAgendamentosConsulta;
+import med.doll.api.domain.consulta.dadosAgendamentoConsulta;
 import med.doll.api.domain.medico.medicoRepository;
 import med.doll.api.domain.validacaoException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-public class validadorMedicoAtivo {
+@Component
+public class validadorMedicoAtivo implements validadorAgendamentoDeConsulta {
 
+    @Autowired
     private medicoRepository repository;
 
-    public void validar(dadosAgendamentosConsulta dados){
+    public void validar(dadosAgendamentoConsulta dados){
         if(dados.idMedico() == null){
             return;
         }
