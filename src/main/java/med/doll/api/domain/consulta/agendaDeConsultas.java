@@ -1,6 +1,7 @@
 package med.doll.api.domain.consulta;
 
-import med.doll.api.domain.consulta.validacoes.validadorAgendamentoDeConsulta;
+import med.doll.api.domain.consulta.validacoes.agendamentos.validadorAgendamentoDeConsulta;
+import med.doll.api.domain.consulta.validacoes.cancelamentos.validadorCancelamentoDeConsulta;
 import med.doll.api.domain.medico.Medico;
 import med.doll.api.domain.medico.medicoRepository;
 import med.doll.api.domain.paciente.pacienteRepository;
@@ -24,6 +25,9 @@ public class agendaDeConsultas {
 
     @Autowired
     private List<validadorAgendamentoDeConsulta> validadores;
+
+    @Autowired
+    private List<validadorCancelamentoDeConsulta> validadoresCancelamento;
 
     public dadosDetalhamentoConsulta agendar(dadosAgendamentoConsulta dados){
         if(!pacienteRepository.existsById(dados.idPaciente())){
@@ -64,6 +68,9 @@ public class agendaDeConsultas {
         if(!consultaRepository.existsById(dados.idConsulta())){
             throw new validacaoException("Consulta não encontrada");
         }
+
+        validadoresCancelamento.forEach(v -> v.validar(dados));
+
         var consulta = consultaRepository.getReferenceById(dados.idConsulta());
         consulta.cancelar(dados.motivo());
     }

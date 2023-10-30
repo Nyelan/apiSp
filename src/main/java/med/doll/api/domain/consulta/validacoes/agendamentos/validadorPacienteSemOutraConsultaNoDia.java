@@ -1,4 +1,4 @@
-package med.doll.api.domain.consulta.validacoes;
+package med.doll.api.domain.consulta.validacoes.agendamentos;
 
 import med.doll.api.domain.consulta.consultaRepository;
 import med.doll.api.domain.consulta.dadosAgendamentoConsulta;
@@ -15,7 +15,7 @@ public class validadorPacienteSemOutraConsultaNoDia implements validadorAgendame
     public void validar(dadosAgendamentoConsulta dados){
         var primeiroHorario = dados.data().withHour(7);
         var ultimoHorario = dados.data().withHour(18);
-        var pacientePossuiOutraConsultaNoDia = repository.existsByPacienteIdAndDataBetween(dados.idPaciente(), primeiroHorario, ultimoHorario);
+        var pacientePossuiOutraConsultaNoDia = repository.existsByPacienteIdAndDataBetweenAndMotivoCancelamentoIsNull(dados.idPaciente(), primeiroHorario, ultimoHorario);
         if(pacientePossuiOutraConsultaNoDia){
             throw new validacaoException("Paciente já possui uma consulta agendada nesse dia");
         }

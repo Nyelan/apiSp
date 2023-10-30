@@ -1,4 +1,4 @@
-package med.doll.api.domain.consulta.validacoes;
+package med.doll.api.domain.consulta.validacoes.agendamentos;
 
 import med.doll.api.domain.consulta.consultaRepository;
 import med.doll.api.domain.consulta.dadosAgendamentoConsulta;
